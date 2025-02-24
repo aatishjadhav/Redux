@@ -37,13 +37,7 @@ const cartReducer = (state = initialState, action) => {
     case REMOVE_FROM_CART:
       return {
         ...state,
-        cartItems: state.cartItems
-          .map((item) =>
-            item.id === action.payload
-              ? { ...item, quantity: item.quantity - 1 }
-              : item
-          )
-          .filter((item) => item.quantity > 0),
+        cartItems: state.cartItems.filter((item) => item.id != action.payload),
       };
 
     case CALCULATE_TOTAL:
