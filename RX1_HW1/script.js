@@ -2,7 +2,7 @@ import { createStore } from "https://cdn.jsdelivr.net/npm/redux@4.2.1/es/redux.m
 import cartReducer from "./cartReducer.js";
 import { addToCart, removeFromCart, calculateTotal } from "./actions.js";
 
-const store = createStore(cartReducer);
+const store = createStore(cartReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 store.subscribe(() => {
   console.log(store.getState());
