@@ -2,7 +2,7 @@ import { createStore } from "https://cdn.jsdelivr.net/npm/redux@4.2.1/es/redux.m
 import profileReducer from "./profileReducer.js";
 import { addProfile, removeProfile, calculateAge } from "./actions.js";
 
-const store = createStore(profileReducer);
+const store = createStore(profileReducer,  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 store.subscribe(() => {
   console.log(store.getState());
