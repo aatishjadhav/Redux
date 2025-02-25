@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Profile Management App</title>
+  </head>
+  <body>
+    <h1>Add Tasks</h1>
+    <input id="taskTitleInput" type="text">
+    <input id="taskDescInput" type="text">
+    <button onclick="addTaskHandler()">Add Task</button>
+
+    <h1>Remove Task</h1>
+    <input type="text" id="removedTaskId" placeholder="Task ID">
+    <button onclick="removeTaskHandler()">Remove Task</button>
+    <ul id="ShowTasksList"></ul>
+
+    <p id="total">Total Tasks: </p>
+    
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
