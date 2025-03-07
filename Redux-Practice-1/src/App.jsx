@@ -10,7 +10,8 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path="/" element={<BookView />} />
-        <Route path="/add-book" element={<BookForm/>} />
+        <Route path="/add-book" element={<BookForm />} />
+        <Route path="/edit-book/:bookId" element={<BookForm/>} />
       </Routes>
     </main>
   );

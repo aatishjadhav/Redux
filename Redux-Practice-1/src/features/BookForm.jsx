@@ -1,16 +1,27 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addBook } from "./bookSlice";
-import { useNavigate } from "react-router-dom";
+import { addBook, updateBook } from "./bookSlice";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const BookForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState({
     bookName: "",
     author: "",
     genre: "",
   });
+
+  const bookToEdit = location.state?.book || null;
+  console.log(bookToEdit);
+
+  useEffect(() => {
+    if (bookToEdit) {
+      setFormData(bookToEdit);
+    }
+  }, [bookToEdit]);
 
   const handleChange = (e) => {
     setFormData({
@@ -21,13 +32,18 @@ const BookForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addBook(formData));
-    setFormData({ bookName: "", author: "", genre: "" });
-    navigate("/");
+    if (bookToEdit) {
+      dispatch(updateBook({ id: bookToEdit._id, ...formData }));
+      navigate("/");
+    } else {
+      dispatch(addBook(formData));
+      setFormData({ bookName: "", author: "", genre: "" });
+      navigate("/");
+    }
   };
   return (
     <div>
-      <h1>Add Book</h1>
+      <h1> {bookToEdit ? "Update Book" : "Add Book"}</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -57,7 +73,7 @@ const BookForm = () => {
         <br />
         <br />
         <button type="submit" className="btn btn-primary">
-          Add Book
+          {bookToEdit ? "Update Book" : "Add Book"}
         </button>
       </form>
     </div>

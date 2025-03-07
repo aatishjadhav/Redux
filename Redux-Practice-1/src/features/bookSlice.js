@@ -14,6 +14,12 @@ export const addBook = createAsyncThunk("book/addBook", async (book) => {
   return response.data;
 });
 
+export const updateBook = createAsyncThunk("book/updateBook", async (book) => {
+  const response = await axios.put(`${BASE_URL}/${book._id}`, book);
+  console.log(response);
+  return response.data;
+});
+
 export const deleteBook = createAsyncThunk(
   "books/deleteBook",
   async (bookId) => {
@@ -44,6 +50,11 @@ export const bookSlice = createSlice({
     });
     builder.addCase(addBook.fulfilled, (state, action) => {
       state.books.push(action.payload);
+    });
+    builder.addCase(updateBook.fulfilled, (state, action) => {
+      state.books = state.books.map((book) =>
+        book._id === action.payload._id ? action.payload : book
+      );
     });
     builder.addCase(deleteBook.fulfilled, (state, action) => {
       state.books = state.books.filter((book) => book._id !== action.payload);
