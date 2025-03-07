@@ -25,16 +25,7 @@ const Navbar = () => {
                   Books
                 </Link>
               </li>
-              <li class="nav-item">
-                <Link class="nav-link" to="/view">
-                  Classes
-                </Link>
-              </li>
-              <li class="nav-item">
-                <Link class="nav-link" to="/stats">
-                  School
-                </Link>
-              </li>
+             
             </ul>
           </div>
         </div>
