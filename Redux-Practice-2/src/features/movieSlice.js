@@ -11,9 +11,18 @@ export const fetchMovies = createAsyncThunk("movies/fetchMovies", async () => {
 
 export const addMovie = createAsyncThunk("movies/addMovie", async (movie) => {
   const response = await axios.post(BASE_URL, movie);
-  console.log(response);
+  console.log("added movie", response);
   return response.data;
 });
+
+export const updateMovie = createAsyncThunk(
+  "movie/updateMovie",
+  async (movie) => {
+    const response = await axios.put(`${BASE_URL}/${movie._id}`, movie);
+    console.log("Updated Data", response);
+    return response.data;
+  }
+);
 
 export const deleteMovie = createAsyncThunk(
   "movie/deleteMovie",
@@ -45,6 +54,11 @@ export const movieSlice = createSlice({
     });
     builder.addCase(addMovie.fulfilled, (state, action) => {
       state.movies.push(action.payload);
+    });
+    builder.addCase(updateMovie.fulfilled, (state, action) => {
+      state.movies = state.movies.map((mov) =>
+        mov._id === action.payload._id ? action.payload : mov
+      );
     });
     builder.addCase(deleteMovie.fulfilled, (state, action) => {
       state.movies = state.movies.filter((mov) => mov._id !== action.payload);

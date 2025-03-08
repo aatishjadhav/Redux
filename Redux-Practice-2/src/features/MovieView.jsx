@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteMovie, fetchMovies } from "./movieSlice";
+import { Link } from 'react-router-dom';
 
 const MovieView = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const MovieView = () => {
           <li className="list-group-item" key={movie._id}>
             Title: {movie.movieTitle} - Director: {movie.director} - Genre:{" "}
             {movie.genre}{" "}
+            <Link className="btn btn-warning float-end mx-4" to={`/edit-movie/${movie._id}`} state={{movie}}>Edit</Link>
             <button
               className="btn btn-danger float-end"
               onClick={() => handleDelete(movie._id)}

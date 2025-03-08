@@ -1,16 +1,26 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addMovie } from "./movieSlice";
-import { useNavigate } from "react-router-dom";
+import { addMovie, updateMovie } from "./movieSlice";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const MovieForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState({
     movieTitle: "",
     director: "",
     genre: "",
   });
+
+  const movieToEdit = location.state?.movie || null;
+
+  useEffect(() => {
+    if (movieToEdit) {
+      setFormData(movieToEdit);
+    }
+  }, [movieToEdit]);
 
   const handleChange = (e) => {
     setFormData({
@@ -21,13 +31,18 @@ const MovieForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addMovie(formData));
-    setFormData({ movieTitle: "", director: "", genre: "" });
-    navigate("/");
+    if (movieToEdit) {
+      dispatch(updateMovie({ id: movieToEdit, ...formData }));
+      navigate("/");
+    } else {
+      dispatch(addMovie(formData));
+      setFormData({ movieTitle: "", director: "", genre: "" });
+      navigate("/");
+    }
   };
   return (
     <div>
-      <h1>Add Movie</h1>
+      <h1>{movieToEdit ? "Edit Movie" : "Add Movie"}</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -57,7 +72,7 @@ const MovieForm = () => {
         <br />
         <br />
         <button type="submit" className="btn btn-primary">
-          Add Movie
+          {movieToEdit ? "Edit Movie" : "Add Movie"}
         </button>
       </form>
     </div>

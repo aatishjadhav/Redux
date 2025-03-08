@@ -11,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MovieView />} />
         <Route path="/add-movie" element={<MovieForm />} />
+        <Route path="/edit-movie/:movieId" element={<MovieForm />} />
       </Routes>
     </main>
   );
